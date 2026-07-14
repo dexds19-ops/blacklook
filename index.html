@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <!-- Header Navigation -->
     <header class="site-header">
         <div class="header-container">
@@ -26,15 +25,14 @@
                     <text x="305" y="72" font-family="'Outfit', 'Cairo', sans-serif" font-weight="300" font-size="13" fill="#ffffff" letter-spacing="4" text-anchor="end">FASHION</text>
                 </svg>
             </a>
-
             <!-- Navigation Links -->
             <nav class="main-nav">
                 <ul>
                     <li><a href="#" class="nav-link active" id="btn-show-store"><i class="fa-solid fa-bag-shopping"></i> المتجر</a></li>
+                    <li><a href="#" class="nav-link" id="btn-show-track-nav" title="تتبع طلبك"><i class="fa-solid fa-magnifying-glass-location"></i> تتبع طلبك</a></li>
                     <li><a href="#" class="nav-link" id="btn-show-admin"><i class="fa-solid fa-sliders"></i> لوحة التحكم</a></li>
                 </ul>
             </nav>
-
             <!-- Cart Trigger Widget -->
             <div class="header-actions">
                 <button class="cart-trigger" id="cart-btn" aria-label="عرض السلة">
@@ -45,10 +43,8 @@
             </div>
         </div>
     </header>
-
     <!-- Main View Content -->
     <main class="main-content">
-
         <!-- Store View Section -->
         <section id="store-section" class="view-section active">
             <!-- Hero Banner -->
@@ -61,7 +57,6 @@
                     <a href="#catalog" class="cta-button">اكتشف المجموعة <i class="fa-solid fa-arrow-down-long"></i></a>
                 </div>
             </div>
-
             <!-- Products Catalog Section -->
             <div class="catalog-container" id="catalog">
                 <div class="catalog-header">
@@ -81,12 +76,10 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Products Grid -->
                 <div class="products-grid" id="products-grid">
                     <!-- Dynamic empty state or product list will load here -->
                 </div>
-
                 <!-- Store Empty State -->
                 <div class="empty-state" id="store-empty-state">
                     <div class="empty-icon-wrap">
@@ -98,7 +91,6 @@
                 </div>
             </div>
         </section>
-
         <!-- Admin Control Panel Section -->
         <section id="admin-section" class="view-section">
             <div class="admin-container">
@@ -114,12 +106,10 @@
                         <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
                 </div>
-
                 <div class="admin-header">
                     <h2><i class="fa-solid fa-sliders"></i> لوحة تحكم المتجر</h2>
                     <p>أهلاً بك في نظام إدارة المتجر. يمكنك التحكم بالمعلومات والمنتجات بناءً على صلاحيات رتبتك.</p>
                 </div>
-
                 <!-- Admin Dashboard Overview Stats -->
                 <div class="stats-grid" id="admin-stats-grid">
                     <div class="stat-card">
@@ -144,7 +134,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="admin-layout-wrapper">
                     <div class="admin-tabs-container">
                         <div class="admin-tabs">
@@ -152,7 +141,6 @@
                             <button class="tab-btn" data-tab="tab-orders" id="tab-btn-orders"><i class="fa-solid fa-receipt"></i> سجل الطلبات الواردة</button>
                             <button class="tab-btn" data-tab="tab-roles" id="tab-btn-roles"><i class="fa-solid fa-user-shield"></i> إدارة الموظفين والصلاحيات</button>
                         </div>
-
                         <!-- Tab 1: Products Management (Form + Table Layout) -->
                         <div class="tab-content active" id="tab-products">
                             <div class="admin-layout">
@@ -161,12 +149,10 @@
                                     <h3 class="card-title" id="form-action-title"><i class="fa-solid fa-circle-plus"></i> إضافة منتج جديد</h3>
                                     <form id="product-form" class="admin-form">
                                         <input type="hidden" id="edit-product-id">
-
                                         <div class="form-group">
                                             <label for="prod-name">اسم المنتج *</label>
                                             <input type="text" id="prod-name" required placeholder="مثال: ساعة يد كلاسيكية سوداء">
                                         </div>
-
                                         <div class="form-row">
                                             <div class="form-group">
                                                 <label for="prod-category">فئة المنتج *</label>
@@ -182,7 +168,6 @@
                                                 <small>افصل بين المقاسات بفاصلة</small>
                                             </div>
                                         </div>
-
                                         <div class="form-row">
                                             <div class="form-group">
                                                 <label for="prod-price">السعر الأصلي (د.ل) *</label>
@@ -194,7 +179,6 @@
                                                 <small>اتركه فارغاً إذا لا يوجد تخفيض</small>
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label for="prod-image">صورة المنتج *</label>
                                             <div class="image-upload-wrapper">
@@ -207,19 +191,16 @@
                                                 <img id="image-preview" src="#" alt="معاينة الصورة" class="image-preview hidden">
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label for="prod-desc">وصف المنتج *</label>
                                             <textarea id="prod-desc" required rows="4" placeholder="اكتب وصفاً جذاباً للمنتج ومواصفاته الفنية..."></textarea>
                                         </div>
-
                                         <div class="form-actions">
                                             <button type="submit" class="submit-btn" id="btn-submit-product">حفظ وإضافة المنتج <i class="fa-solid fa-check"></i></button>
                                             <button type="button" class="cancel-btn hidden" id="btn-cancel-edit">إلغاء التعديل</button>
                                         </div>
                                     </form>
                                 </div>
-
                                 <!-- Column 2: Products List Table -->
                                 <div class="admin-card">
                                     <h3 class="card-title"><i class="fa-solid fa-boxes-stacked"></i> قائمة المنتجات الحالية</h3>
@@ -246,7 +227,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Tab 2: Orders History Log -->
                         <div class="tab-content" id="tab-orders">
                             <div class="admin-card">
@@ -274,7 +254,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Tab 3: Ranks & Permissions Management (Super Admin only) -->
                         <div class="tab-content" id="tab-roles">
                             <div class="admin-layout">
@@ -301,7 +280,6 @@
                                         <button type="submit" class="submit-btn" style="background-color: var(--accent-white); color: var(--bg-black);">إضافة الموظف ومنحه الصلاحية <i class="fa-solid fa-user-shield"></i></button>
                                     </form>
                                 </div>
-
                                 <!-- Column 2: Ranks List -->
                                 <div class="admin-card">
                                     <h3 class="card-title"><i class="fa-solid fa-shield-halved"></i> الموظفون المصرح لهم</h3>
@@ -328,9 +306,7 @@
                 </div>
             </div>
         </section>
-
     </main>
-
     <!-- Slide-out Shopping Cart Drawer -->
     <div class="cart-drawer-overlay" id="cart-overlay"></div>
     <div class="cart-drawer" id="cart-drawer">
@@ -338,20 +314,17 @@
             <button class="close-cart-btn" id="close-cart-btn" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
             <h2 class="cart-title"><i class="fa-solid fa-cart-shopping"></i> سلة المشتريات</h2>
         </div>
-
         <div class="cart-drawer-body">
             <!-- Cart Items List -->
             <div class="cart-items-list" id="cart-items-container">
                 <!-- Dynamically generated items -->
             </div>
-
             <!-- Cart Empty State -->
             <div class="cart-empty-state" id="cart-empty">
                 <i class="fa-solid fa-basket-shopping"></i>
                 <p>سلتك فارغة تماماً. تصفح المتجر وأضف بعض المنتجات!</p>
             </div>
         </div>
-
         <div class="cart-drawer-footer" id="cart-footer">
             <div class="cart-summary-row">
                 <span>المجموع الفرعي:</span>
@@ -369,7 +342,6 @@
             <button class="checkout-btn" id="btn-open-checkout">الذهاب للدفع وتأكيد الطلب <i class="fa-solid fa-arrow-left"></i></button>
         </div>
     </div>
-
     <!-- Product Quick View Modal -->
     <div class="modal-overlay" id="product-modal">
         <div class="modal-container">
@@ -397,7 +369,6 @@
                             <!-- Dynamic sizes -->
                         </div>
                     </div>
-
                     <div class="modal-actions">
                         <div class="quantity-selector">
                             <button class="qty-btn minus" id="modal-qty-minus"><i class="fa-solid fa-minus"></i></button>
@@ -410,7 +381,6 @@
             </div>
         </div>
     </div>
-
     <!-- Checkout Modal -->
     <div class="modal-overlay" id="checkout-modal">
         <div class="checkout-modal-container">
@@ -420,13 +390,11 @@
                 <h3><i class="fa-brands fa-whatsapp"></i> إتمام الطلب عبر الواتساب</h3>
                 <p>يرجى تعبئة بيانات الشحن الخاصة بك. سيتم مراجعة طلبك وإرسال نسخة منه مباشرة إلى صاحب المتجر عبر الواتساب لتأكيد الشحن الفوري.</p>
             </div>
-
             <form id="checkout-form" class="checkout-form">
                 <div class="form-group">
                     <label for="cust-name">الاسم الثلاثي بالكامل *</label>
                     <input type="text" id="cust-name" required placeholder="مثال: محمد علي الورفلي">
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label for="cust-phone">رقم الهاتف (ليبي) *</label>
@@ -451,12 +419,10 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="cust-address">العنوان بالتفصيل *</label>
                     <input type="text" id="cust-address" required placeholder="مثال: حي الأندلس، بجوار مدرسة الأمل، طرابلس">
                 </div>
-
                 <!-- Order Summary inside Checkout -->
                 <div class="checkout-order-summary">
                     <h4>ملخص طلبك:</h4>
@@ -472,7 +438,6 @@
                         <strong id="checkout-summary-total">0 د.ل</strong>
                     </div>
                 </div>
-
                 <button type="submit" class="whatsapp-checkout-submit-btn">
                     <span>إرسال وتأكيد الطلبية عبر الواتساب</span>
                     <i class="fa-brands fa-whatsapp"></i>
@@ -480,7 +445,6 @@
             </form>
         </div>
     </div>
-
     <!-- Login Modal (Password Access Gate) -->
     <div class="modal-overlay" id="login-modal">
         <div class="checkout-modal-container" style="max-width: 420px; text-align: center;">
@@ -492,7 +456,6 @@
                 </h3>
                 <p>سجل الدخول بكلمة السر المصرح لك بها لإدارة المتجر.</p>
             </div>
-
             <!-- Single Password Login Form -->
             <form id="login-password-form" class="checkout-form">
                 <div class="form-group" style="text-align: right;">
@@ -506,10 +469,59 @@
             </form>
         </div>
     </div>
-
+    <!-- Order Tracking Modal -->
+    <div class="modal-overlay" id="track-modal">
+        <div class="checkout-modal-container" style="max-width: 500px;">
+            <button class="close-modal-btn" id="close-track-modal" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="checkout-header">
+                <h3><i class="fa-solid fa-magnifying-glass-location"></i> تتبع حالة طلبك</h3>
+                <p>أدخل رقم الطلبية الخاص بك (الذي يبدأ بـ BL-) لمعرفة حالة الشحن والتجهيز الحالية.</p>
+            </div>
+            <form id="track-form" class="checkout-form">
+                <div class="form-group" style="display: flex; gap: 0.5rem; flex-direction: row; align-items: center;">
+                    <input type="text" id="track-input" required placeholder="مثال: BL-4321" style="flex-grow: 1; text-align: center; text-transform: uppercase; font-family: var(--font-en); font-weight: 700; background-color: var(--bg-card); border-color: var(--border-color); color: var(--accent-white); padding: 0.8rem;">
+                    <button type="submit" id="btn-track-search" class="submit-btn" style="width: auto; padding: 0.8rem 1.5rem; margin: 0; background-color: var(--accent-white); color: var(--bg-black); font-weight: 700; height: 100%; border: none; border-radius: 6px; cursor: pointer;">بحث</button>
+                </div>
+            </form>
+            <!-- Track Result Container (Hidden initially) -->
+            <div id="track-result" class="hidden" style="margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">حالة الطلبية رقم: </span>
+                    <strong id="track-result-id" style="font-family: var(--font-en); font-size: 1.15rem; color: var(--accent-white);">#BL-1234</strong>
+                </div>
+                <!-- Tracking Progress Bar -->
+                <div class="track-progress-wrapper">
+                    <div class="track-step" id="step-pending">
+                        <div class="step-circle"><i class="fa-solid fa-clock"></i></div>
+                        <span>قيد الانتظار</span>
+                    </div>
+                    <div class="track-line" id="line-1"></div>
+                    <div class="track-step" id="step-shipped">
+                        <div class="step-circle"><i class="fa-solid fa-truck-fast"></i></div>
+                        <span>تم الشحن</span>
+                    </div>
+                    <div class="track-line" id="line-2"></div>
+                    <div class="track-step" id="step-completed">
+                        <div class="step-circle"><i class="fa-solid fa-circle-check"></i></div>
+                        <span>واصل</span>
+                    </div>
+                </div>
+                <!-- Tracking Details Info -->
+                <div class="checkout-order-summary" style="margin-top: 1.5rem; text-align: right; background-color: var(--bg-input);">
+                    <p style="font-size: 0.9rem; margin-bottom: 0.35rem;"><strong>صاحب الطلب:</strong> <span id="track-result-name" style="color: var(--accent-white);">أحمد علي</span></p>
+                    <p style="font-size: 0.9rem; margin-bottom: 0.35rem;"><strong>المنطقة والمدينة:</strong> <span id="track-result-address" style="color: var(--accent-white);">طرابلس</span></p>
+                    <p style="font-size: 0.9rem; margin-bottom: 0.35rem;"><strong>تاريخ الطلب:</strong> <span id="track-result-date" style="color: var(--accent-white);">2026-07-14</span></p>
+                    <p style="font-size: 0.9rem; margin-bottom: 0.35rem;"><strong>إجمالي المنتجات:</strong> <span id="track-result-total" style="color: var(--accent-white); font-weight: bold;">150 د.ل</span></p>
+                    <small style="color: #ef4444; display: block; border-top: 1px dashed var(--border-color); padding-top: 0.5rem; font-weight: bold;" id="track-result-cancelled-note" class="hidden">
+                        ⚠️ تنبيه: تم إلغاء هذه الطلبية من قبل إدارة المتجر.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Dynamic Toast Notification Container -->
     <div class="toast-container" id="toast-container"></div>
-
     <!-- Application Script Logic -->
     <script type="module" src="/app.js"></script>
 </body>
