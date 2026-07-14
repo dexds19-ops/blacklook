@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackLook Fashion | متجر بلاك لوك</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="header-container">
+            <!-- Brand Logo (Recreated SVG) -->
+            <a href="#" class="logo-wrapper" id="nav-logo">
+                <svg viewBox="0 0 320 80" class="store-logo" xmlns="http://www.w3.org/2000/svg">
+                    <text x="10" y="45" font-family="'Outfit', 'Cairo', sans-serif" font-weight="900" font-style="italic" font-size="34" fill="#ffffff" letter-spacing="1">BLACK LOOK</text>
+                    <line x1="12" y1="53" x2="305" y2="53" stroke="#ffffff" stroke-width="3" />
+                    <text x="305" y="72" font-family="'Outfit', 'Cairo', sans-serif" font-weight="300" font-size="13" fill="#ffffff" letter-spacing="4" text-anchor="end">FASHION</text>
+                </svg>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="nav-link active" id="btn-show-store"><i class="fa-solid fa-bag-shopping"></i> المتجر</a></li>
+                    <li><a href="#" class="nav-link" id="btn-show-admin"><i class="fa-solid fa-sliders"></i> لوحة التحكم</a></li>
+                </ul>
+            </nav>
+
+            <!-- Cart Trigger Widget -->
+            <div class="header-actions">
+                <button class="cart-trigger" id="cart-btn" aria-label="عرض السلة">
+                    <span class="cart-count" id="cart-badge">0</span>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-text">السلة</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main View Content -->
+    <main class="main-content">
+
+        <!-- Store View Section -->
+        <section id="store-section" class="view-section active">
+            <!-- Hero Banner -->
+            <div class="hero-section">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <span class="hero-subtitle">تَشكيلة حصرية وراقِية</span>
+                    <h1 class="hero-title" style="font-family: 'Outfit', sans-serif; letter-spacing: 2px;">BLACK LOOK</h1>
+                    <p class="hero-description">متجر BlackLook يقدم لك تصاميم عصرية بسيطة بلون الفخامة الداكنة والتفاصيل البيضاء الناصعة.</p>
+                    <a href="#catalog" class="cta-button">اكتشف المجموعة <i class="fa-solid fa-arrow-down-long"></i></a>
+                </div>
+            </div>
+
+            <!-- Products Catalog Section -->
+            <div class="catalog-container" id="catalog">
+                <div class="catalog-header">
+                    <h2 class="section-title">مجموعة BlackLook</h2>
+                    <div class="search-filter-bar">
+                        <!-- Search Input -->
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-input" placeholder="ابحث عن منتج بالاسم أو الوصف...">
+                        </div>
+                        <!-- Categories Filter -->
+                        <div class="categories-filter" id="categories-container">
+                            <button class="filter-btn active" data-category="all">الكل</button>
+                            <button class="filter-btn" data-category="ملابس">ملابس</button>
+                            <button class="filter-btn" data-category="أحذية">أحذية</button>
+                            <button class="filter-btn" data-category="إكسسوارات">إكسسوارات</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="products-grid" id="products-grid">
+                    <!-- Dynamic empty state or product list will load here -->
+                </div>
+
+                <!-- Store Empty State -->
+                <div class="empty-state" id="store-empty-state">
+                    <div class="empty-icon-wrap">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+                    <h3>المتجر فارغ حالياً</h3>
+                    <p>لم يقم صاحب المتجر بإضافة أي منتجات بعد. إذا كنت أنت صاحب المتجر، يرجى الانتقال إلى لوحة التحكم لإضافة المنتجات.</p>
+                    <button class="primary-btn" id="empty-goto-admin-btn">انتقل إلى لوحة التحكم <i class="fa-solid fa-arrow-left"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Control Panel Section -->
+        <section id="admin-section" class="view-section">
+            <div class="admin-container">
+                <!-- User Session Status Bar -->
+                <div class="admin-session-bar" id="admin-session-bar">
+                    <div class="user-info">
+                        <i class="fa-solid fa-circle-user"></i>
+                        <span id="session-user-role">المشرف العام</span>
+                        <span class="session-user-name" id="session-user-name">(مالك المتجر)</span>
+                    </div>
+                    <button class="logout-btn" id="btn-logout" title="تسجيل الخروج">
+                        <span>تسجيل الخروج</span>
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+
+                <div class="admin-header">
+                    <h2><i class="fa-solid fa-sliders"></i> لوحة تحكم المتجر</h2>
+                    <p>أهلاً بك في نظام إدارة المتجر. يمكنك التحكم بالمعلومات والمنتجات بناءً على صلاحيات رتبتك.</p>
+                </div>
+
+                <!-- Admin Dashboard Overview Stats -->
+                <div class="stats-grid" id="admin-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-money-bill-wave"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">إجمالي المبيعات المقدرة</span>
+                            <span class="stat-value" id="stat-total-sales">0 د.ل</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-box-open"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">عدد الطلبات</span>
+                            <span class="stat-value" id="stat-orders-count">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-tags"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">عدد المنتجات بالمتجر</span>
+                            <span class="stat-value" id="stat-products-count">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-layout-wrapper">
+                    <div class="admin-tabs-container">
+                        <div class="admin-tabs">
+                            <button class="tab-btn active" data-tab="tab-products"><i class="fa-solid fa-list"></i> إدارة المنتجات</button>
+                            <button class="tab-btn" data-tab="tab-orders" id="tab-btn-orders"><i class="fa-solid fa-receipt"></i> سجل الطلبات الواردة</button>
+                            <button class="tab-btn" data-tab="tab-roles" id="tab-btn-roles"><i class="fa-solid fa-user-shield"></i> إدارة الموظفين والصلاحيات</button>
+                        </div>
+
+                        <!-- Tab 1: Products Management (Form + Table Layout) -->
+                        <div class="tab-content active" id="tab-products">
+                            <div class="admin-layout">
+                                <!-- Column 1: Add/Edit Product Form -->
+                                <div class="admin-card form-column">
+                                    <h3 class="card-title" id="form-action-title"><i class="fa-solid fa-circle-plus"></i> إضافة منتج جديد</h3>
+                                    <form id="product-form" class="admin-form">
+                                        <input type="hidden" id="edit-product-id">
+
+                                        <div class="form-group">
+                                            <label for="prod-name">اسم المنتج *</label>
+                                            <input type="text" id="prod-name" required placeholder="مثال: ساعة يد كلاسيكية سوداء">
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="prod-category">فئة المنتج *</label>
+                                                <select id="prod-category" required>
+                                                    <option value="ملابس">ملابس</option>
+                                                    <option value="أحذية">أحذية</option>
+                                                    <option value="إكسسوارات">إكسسوارات</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="prod-sizes">المقاسات المتوفرة (اختياري)</label>
+                                                <input type="text" id="prod-sizes" placeholder="مثال: S, M, L, XL أو 40, 41, 42">
+                                                <small>افصل بين المقاسات بفاصلة</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label for="prod-price">السعر الأصلي (د.ل) *</label>
+                                                <input type="number" id="prod-price" required min="1" step="0.5" placeholder="مثال: 150">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="prod-discount-price">سعر التخفيض (د.ل) - اختياري</label>
+                                                <input type="number" id="prod-discount-price" min="0" step="0.5" placeholder="مثال: 120">
+                                                <small>اتركه فارغاً إذا لا يوجد تخفيض</small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="prod-image">صورة المنتج *</label>
+                                            <div class="image-upload-wrapper">
+                                                <input type="file" id="prod-image" accept="image/*" class="file-input">
+                                                <div class="upload-area" id="upload-area">
+                                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                    <span>اختر صورة للمنتج من جهازك</span>
+                                                    <small>سيتم حفظها محلياً في الذاكرة</small>
+                                                </div>
+                                                <img id="image-preview" src="#" alt="معاينة الصورة" class="image-preview hidden">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="prod-desc">وصف المنتج *</label>
+                                            <textarea id="prod-desc" required rows="4" placeholder="اكتب وصفاً جذاباً للمنتج ومواصفاته الفنية..."></textarea>
+                                        </div>
+
+                                        <div class="form-actions">
+                                            <button type="submit" class="submit-btn" id="btn-submit-product">حفظ وإضافة المنتج <i class="fa-solid fa-check"></i></button>
+                                            <button type="button" class="cancel-btn hidden" id="btn-cancel-edit">إلغاء التعديل</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Column 2: Products List Table -->
+                                <div class="admin-card">
+                                    <h3 class="card-title"><i class="fa-solid fa-boxes-stacked"></i> قائمة المنتجات الحالية</h3>
+                                    <div class="table-responsive">
+                                        <table class="admin-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>المنتج</th>
+                                                    <th>الفئة</th>
+                                                    <th>السعر</th>
+                                                    <th>التخفيض</th>
+                                                    <th>العمليات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="admin-products-list">
+                                                <!-- Dynamically generated -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="empty-table-state" id="products-table-empty">
+                                        <i class="fa-solid fa-folder-open"></i>
+                                        <p>لا توجد منتجات مضافة بعد. أضف منتجاتك باستخدام النموذج المجاور.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: Orders History Log -->
+                        <div class="tab-content" id="tab-orders">
+                            <div class="admin-card">
+                                <div class="table-responsive">
+                                    <table class="admin-table">
+                                        <thead>
+                                            <tr>
+                                                <th>رقم الطلب</th>
+                                                <th>الزبون / الهاتف</th>
+                                                <th>التاريخ</th>
+                                                <th>المنتجات</th>
+                                                <th>الإجمالي</th>
+                                                <th>الحالة</th>
+                                                <th>إجراء</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="admin-orders-list">
+                                            <!-- Dynamically generated -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="empty-table-state" id="orders-table-empty">
+                                    <i class="fa-solid fa-receipt"></i>
+                                    <p>لا توجد طلبيات مستلمة بعد.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 3: Ranks & Permissions Management (Super Admin only) -->
+                        <div class="tab-content" id="tab-roles">
+                            <div class="admin-layout">
+                                <!-- Column 1: Add Role Form -->
+                                <div class="admin-card form-column">
+                                    <h3 class="card-title"><i class="fa-solid fa-user-plus"></i> إضافة موظف جديد</h3>
+                                    <form id="role-form" class="admin-form">
+                                        <div class="form-group">
+                                            <label for="role-username">اسم الموظف *</label>
+                                            <input type="text" id="role-username" required placeholder="مثال: أحمد علي">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="role-password">كلمة السر الخاصة به *</label>
+                                            <input type="text" id="role-password" required placeholder="مثال: emp123" minlength="4">
+                                            <small>سيستخدم هذه الكلمة لتسجيل الدخول للوحة التحكم</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="role-rank">الرتبة الممنوحة *</label>
+                                            <select id="role-rank" required>
+                                                <option value="admin">مدير (يتحكم بالمنتجات والطلبات والإحصائيات)</option>
+                                                <option value="editor">محرر (يتحكم بالمنتجات فقط)</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="submit-btn" style="background-color: var(--accent-white); color: var(--bg-black);">إضافة الموظف ومنحه الصلاحية <i class="fa-solid fa-user-shield"></i></button>
+                                    </form>
+                                </div>
+
+                                <!-- Column 2: Ranks List -->
+                                <div class="admin-card">
+                                    <h3 class="card-title"><i class="fa-solid fa-shield-halved"></i> الموظفون المصرح لهم</h3>
+                                    <div class="table-responsive">
+                                        <table class="admin-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>اسم الموظف</th>
+                                                    <th>رتبة العمل</th>
+                                                    <th>كلمة السر</th>
+                                                    <th>الحالة</th>
+                                                    <th>الإجراء</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="admin-roles-list">
+                                                <!-- Dynamically generated -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Slide-out Shopping Cart Drawer -->
+    <div class="cart-drawer-overlay" id="cart-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-drawer-header">
+            <button class="close-cart-btn" id="close-cart-btn" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="cart-title"><i class="fa-solid fa-cart-shopping"></i> سلة المشتريات</h2>
+        </div>
+
+        <div class="cart-drawer-body">
+            <!-- Cart Items List -->
+            <div class="cart-items-list" id="cart-items-container">
+                <!-- Dynamically generated items -->
+            </div>
+
+            <!-- Cart Empty State -->
+            <div class="cart-empty-state" id="cart-empty">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <p>سلتك فارغة تماماً. تصفح المتجر وأضف بعض المنتجات!</p>
+            </div>
+        </div>
+
+        <div class="cart-drawer-footer" id="cart-footer">
+            <div class="cart-summary-row">
+                <span>المجموع الفرعي:</span>
+                <span class="subtotal-val" id="cart-subtotal">0 د.ل</span>
+            </div>
+            <div class="cart-summary-row shipping-row">
+                <span>تكلفة التوصيل:</span>
+                <span class="shipping-val" style="color: var(--text-secondary); font-weight: bold;">حسب المنطقة</span>
+            </div>
+            <hr class="summary-divider">
+            <div class="cart-summary-row total-row">
+                <span>إجمالي المنتجات:</span>
+                <span class="total-val" id="cart-total">0 د.ل</span>
+            </div>
+            <button class="checkout-btn" id="btn-open-checkout">الذهاب للدفع وتأكيد الطلب <i class="fa-solid fa-arrow-left"></i></button>
+        </div>
+    </div>
+
+    <!-- Product Quick View Modal -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal-container">
+            <button class="close-modal-btn" id="close-product-modal" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+            <div class="product-modal-grid">
+                <!-- Left: Product Image -->
+                <div class="modal-image-wrap">
+                    <img id="modal-img" src="" alt="صورة المنتج">
+                    <div id="modal-sale-badge" class="modal-sale-badge">تخفيض</div>
+                </div>
+                <!-- Right: Product Info -->
+                <div class="modal-info-wrap">
+                    <span class="modal-category" id="modal-category">الفئة</span>
+                    <h2 class="modal-title" id="modal-title">اسم المنتج</h2>
+                    <div class="modal-prices">
+                        <span class="price-original strikethrough" id="modal-price-original">0 د.ل</span>
+                        <span class="price-current" id="modal-price-current">0 د.ل</span>
+                    </div>
+                    <p class="modal-desc" id="modal-desc">وصف كامل للمنتج يظهر هنا مع جميع التفاصيل والمواصفات التي أدخلها المشرف.</p>
+                    
+                    <!-- Size Selector if sizes exist -->
+                    <div class="modal-option-group" id="modal-sizes-group">
+                        <label class="option-label">المقاس:</label>
+                        <div class="size-options-grid" id="modal-sizes-container">
+                            <!-- Dynamic sizes -->
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <div class="quantity-selector">
+                            <button class="qty-btn minus" id="modal-qty-minus"><i class="fa-solid fa-minus"></i></button>
+                            <input type="number" class="qty-input" id="modal-qty-input" value="1" min="1" readonly>
+                            <button class="qty-btn plus" id="modal-qty-plus"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                        <button class="add-to-cart-modal-btn" id="modal-add-to-cart-btn">إضافة إلى السلة <i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="checkout-modal-container">
+            <button class="close-modal-btn" id="close-checkout-modal" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="checkout-header">
+                <h3><i class="fa-brands fa-whatsapp"></i> إتمام الطلب عبر الواتساب</h3>
+                <p>يرجى تعبئة بيانات الشحن الخاصة بك. سيتم مراجعة طلبك وإرسال نسخة منه مباشرة إلى صاحب المتجر عبر الواتساب لتأكيد الشحن الفوري.</p>
+            </div>
+
+            <form id="checkout-form" class="checkout-form">
+                <div class="form-group">
+                    <label for="cust-name">الاسم الثلاثي بالكامل *</label>
+                    <input type="text" id="cust-name" required placeholder="مثال: محمد علي الورفلي">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cust-phone">رقم الهاتف (ليبي) *</label>
+                        <input type="tel" id="cust-phone" required pattern="^09[12345][0-9]{7}$" placeholder="مثال: 0947444666">
+                        <small>يجب أن يبدأ بـ 09 ويتكون من 10 أرقام</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-city">المدينة/المنطقة *</label>
+                        <select id="cust-city" required>
+                            <option value="" disabled selected>اختر مدينتك...</option>
+                            <option value="طرابلس">طرابلس</option>
+                            <option value="بنغازي">بنغازي</option>
+                            <option value="مصراتة">مصراتة</option>
+                            <option value="الخمس">الخمس</option>
+                            <option value="الزاوية">الزاوية</option>
+                            <option value="زليتن">زليتن</option>
+                            <option value="سبها">سبها</option>
+                            <option value="طبرق">طبرق</option>
+                            <option value="البيضاء">البيضاء</option>
+                            <option value="غريان">غريان</option>
+                            <option value="أخرى">مدينة أخرى</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cust-address">العنوان بالتفصيل *</label>
+                    <input type="text" id="cust-address" required placeholder="مثال: حي الأندلس، بجوار مدرسة الأمل، طرابلس">
+                </div>
+
+                <!-- Order Summary inside Checkout -->
+                <div class="checkout-order-summary">
+                    <h4>ملخص طلبك:</h4>
+                    <ul class="summary-items" id="checkout-summary-items">
+                        <!-- Dynamic list of items -->
+                    </ul>
+                    <div class="summary-total-row" style="margin-bottom: 0.5rem;">
+                        <span>تكلفة التوصيل:</span>
+                        <strong style="color: var(--text-secondary); font-size: 1rem;">حسب المنطقة</strong>
+                    </div>
+                    <div class="summary-total-row" style="border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+                        <span>إجمالي المنتجات المطلوب:</span>
+                        <strong id="checkout-summary-total">0 د.ل</strong>
+                    </div>
+                </div>
+
+                <button type="submit" class="whatsapp-checkout-submit-btn">
+                    <span>إرسال وتأكيد الطلبية عبر الواتساب</span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal (Password Access Gate) -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="checkout-modal-container" style="max-width: 420px; text-align: center;">
+            <button class="close-modal-btn" id="close-login-modal" aria-label="إغلاق" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="checkout-header">
+                <h3 style="color: var(--accent-white); font-weight: 800; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; gap: 0.6rem;">
+                    <i class="fa-solid fa-lock"></i> لوحة التحكم
+                </h3>
+                <p>سجل الدخول بكلمة السر المصرح لك بها لإدارة المتجر.</p>
+            </div>
+
+            <!-- Single Password Login Form -->
+            <form id="login-password-form" class="checkout-form">
+                <div class="form-group" style="text-align: right;">
+                    <label for="login-password-input">أدخل كلمة السر *</label>
+                    <input type="password" id="login-password-input" required placeholder="اكتب كلمة السر هنا..." style="text-align: center; letter-spacing: 2px; font-weight: bold; background-color: var(--bg-card); color: var(--accent-white); border-color: var(--border-color);">
+                </div>
+                <button type="submit" class="whatsapp-checkout-submit-btn" style="background-color: var(--accent-white); color: var(--bg-black); box-shadow: none; margin-top: 0.5rem;">
+                    <span>تسجيل الدخول</span>
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dynamic Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Application Script Logic -->
+    <script type="module" src="/app.js"></script>
+</body>
+</html>
