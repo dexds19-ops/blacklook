@@ -1197,7 +1197,7 @@ button, input, select, textarea {
     font-size: 1.1rem;
 }
 
-.admin-session-bar .session-user-phone {
+.admin-session-bar .session-user-name {
     font-family: var(--font-en);
     font-size: 0.85rem;
     color: var(--text-secondary);
@@ -1766,6 +1766,84 @@ button, input, select, textarea {
 .toast.success {
     background-color: #22c55e;
     color: var(--accent-white);
+}
+
+/* --- Tracking Progress Stepper --- */
+.track-progress-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2rem 0 1rem 0;
+    direction: ltr; /* Left-to-right visual order for step progress */
+}
+
+.track-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex-grow: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.track-step span {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    font-family: var(--font-ar);
+}
+
+.step-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--bg-card);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    transition: all var(--transition-smooth);
+}
+
+.track-line {
+    height: 3px;
+    background-color: var(--border-color);
+    flex-grow: 2;
+    margin: 0 -22px;
+    transform: translateY(-14px); /* aligns line vertically with centers of circles */
+    transition: all var(--transition-smooth);
+    z-index: 1;
+}
+
+/* Active states for tracking steps */
+.track-step.active span {
+    color: var(--accent-white);
+}
+
+.track-step.active .step-circle {
+    background-color: var(--accent-white);
+    border-color: var(--accent-white);
+    color: var(--bg-black);
+    box-shadow: var(--glow-white);
+}
+
+.track-line.active {
+    background-color: var(--accent-white);
+}
+
+/* Cancelled/Deleted state */
+.track-step.cancelled .step-circle {
+    background-color: #ef4444;
+    border-color: #ef4444;
+    color: var(--accent-white);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+.track-step.cancelled span {
+    color: #ef4444;
 }
 
 /* --- Responsive Adjustments --- */

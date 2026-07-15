@@ -3,7 +3,7 @@
    Includes: State management, LocalStorage persistence,
              Password-Based Login & Role-Based Access Control,
              WhatsApp Checkout routing with text-based shipping cost,
-             Merchant Admin Control Panel, and UI transitions.
+             Merchant Admin Control Panel, Order Tracking Portal, and UI transitions.
    ========================================== */
 
 // --- Constants & Globals ---
@@ -35,6 +35,7 @@ const DOM = {
     // Navigation
     btnShowStore: document.getElementById("btn-show-store"),
     btnShowAdmin: document.getElementById("btn-show-admin"),
+    btnShowTrackNav: document.getElementById("btn-show-track-nav"),
     storeSection: document.getElementById("store-section"),
     adminSection: document.getElementById("admin-section"),
     navLogo: document.getElementById("nav-logo"),
@@ -92,6 +93,19 @@ const DOM = {
     custPhone: document.getElementById("cust-phone"),
     custCity: document.getElementById("cust-city"),
     custAddress: document.getElementById("cust-address"),
+
+    // Order Tracking Modal
+    trackModal: document.getElementById("track-modal"),
+    closeTrackModal: document.getElementById("close-track-modal"),
+    trackForm: document.getElementById("track-form"),
+    trackInput: document.getElementById("track-input"),
+    trackResult: document.getElementById("track-result"),
+    trackResultId: document.getElementById("track-result-id"),
+    trackResultName: document.getElementById("track-result-name"),
+    trackResultAddress: document.getElementById("track-result-address"),
+    trackResultDate: document.getElementById("track-result-date"),
+    trackResultTotal: document.getElementById("track-result-total"),
+    trackResultCancelledNote: document.getElementById("track-result-cancelled-note"),
 
     // Auth Password Login Modal
     loginModal: document.getElementById("login-modal"),
@@ -168,13 +182,12 @@ function loadDataFromLocalStorage() {
             { name: "مالك المتجر", password: SUPER_ADMIN_PASSWORD, rank: "superadmin", label: "المشرف العام" }
         ];
 
-        // Always ensure Super Admin is inside the credential lists with the correct password
+        // Always ensure Super Admin is inside the credential lists
         const hasSuperAdmin = state.authorizedUsers.find(u => u.rank === "superadmin");
         if (!hasSuperAdmin) {
             state.authorizedUsers.unshift({ name: "مالك المتجر", password: SUPER_ADMIN_PASSWORD, rank: "superadmin", label: "المشرف العام" });
             localStorage.setItem(LOCAL_STORAGE_USERS, JSON.stringify(state.authorizedUsers));
         } else {
-            // Update Super Admin password in case it was modified
             hasSuperAdmin.password = SUPER_ADMIN_PASSWORD;
             localStorage.setItem(LOCAL_STORAGE_USERS, JSON.stringify(state.authorizedUsers));
         }
@@ -276,6 +289,14 @@ function setupEventListeners() {
     DOM.btnOpenCheckout.addEventListener("click", openCheckoutFlow);
     DOM.closeCheckoutModal.addEventListener("click", () => toggleModal(DOM.checkoutModal, false));
     DOM.checkoutForm.addEventListener("submit", handleCheckoutFormSubmit);
+
+    // Order Tracking Modal Actions
+    DOM.btnShowTrackNav.addEventListener("click", (e) => {
+        e.preventDefault();
+        openTrackingPortal();
+    });
+    DOM.closeTrackModal.addEventListener("click", () => toggleModal(DOM.trackModal, false));
+    DOM.trackForm.addEventListener("submit", handleTrackingSearchSubmit);
 }
 
 // --- View Router ---
@@ -323,10 +344,8 @@ function showToast(message, type = "success") {
 // --- Authentication & Access Control Flow (Password Based) ---
 function handleAdminAccessRequest() {
     if (state.currentUser) {
-        // Session active, redirect directly
         switchView("admin");
     } else {
-        // Show password login gate
         DOM.loginPasswordInput.value = "";
         toggleModal(DOM.loginModal, true);
     }
@@ -336,7 +355,6 @@ function handleLoginPasswordSubmit(e) {
     e.preventDefault();
     const enteredPassword = DOM.loginPasswordInput.value.trim();
 
-    // Scan users for a matching password credential
     const matchedUser = state.authorizedUsers.find(u => u.password === enteredPassword);
 
     if (matchedUser) {
@@ -346,14 +364,11 @@ function handleLoginPasswordSubmit(e) {
             label: matchedUser.label
         };
 
-        // Persist session
         localStorage.setItem(LOCAL_STORAGE_SESSION, JSON.stringify(state.currentUser));
 
-        // Reset & Close Modal
         DOM.loginPasswordInput.value = "";
         toggleModal(DOM.loginModal, false);
         
-        // Load Panel
         switchView("admin");
         showToast(`مرحباً بك مجدداً يا ${state.currentUser.name} (${state.currentUser.label})!`, "success");
     } else {
@@ -381,7 +396,6 @@ function handleRoleFormSubmit(e) {
     const empPassword = DOM.rolePasswordInput.value.trim();
     const selectedRank = DOM.roleRankSelect.value;
     
-    // Verify password uniqueness to prevent login collision
     const passwordExists = state.authorizedUsers.find(u => u.password === empPassword);
     if (passwordExists) {
         showToast("كلمة السر هذه مستخدمة بالفعل من قبل موظف آخر! اختر كلمة سر فريدة.", "error");
@@ -446,7 +460,6 @@ function handleProductImageUpload(e) {
 function renderStorefront() {
     DOM.productsGrid.innerHTML = "";
     
-    // Filter Products
     const filteredProducts = state.products.filter(prod => {
         const matchesCategory = state.filters.category === "all" || prod.category === state.filters.category;
         const matchesSearch = prod.name.toLowerCase().includes(state.filters.search) || 
@@ -454,7 +467,6 @@ function renderStorefront() {
         return matchesCategory && matchesSearch;
     });
 
-    // Handle Empty States
     if (state.products.length === 0) {
         DOM.storeEmptyState.classList.add("active");
         DOM.productsGrid.style.display = "none";
@@ -474,7 +486,6 @@ function renderStorefront() {
         return;
     }
 
-    // Render Cards
     filteredProducts.forEach(prod => {
         const hasDiscount = prod.discountPrice && parseFloat(prod.discountPrice) < parseFloat(prod.price);
         const currentPrice = hasDiscount ? prod.discountPrice : prod.price;
@@ -509,11 +520,9 @@ function renderStorefront() {
 function renderAdminPanel() {
     if (!state.currentUser) return;
 
-    // 1. Render Session Info
     DOM.sessionUserRole.innerText = state.currentUser.label;
     DOM.sessionUserName.innerText = `(${state.currentUser.name})`;
 
-    // 2. Role-Based Rendering Adjustments
     const rank = state.currentUser.rank;
 
     if (rank === "superadmin") {
@@ -543,7 +552,6 @@ function renderAdminPanel() {
         DOM.tabProducts.classList.add("active");
     }
 
-    // 3. Render Products List Table (all ranks)
     DOM.adminProductsList.innerHTML = "";
     
     if (state.products.length === 0) {
@@ -578,7 +586,6 @@ function renderAdminPanel() {
         });
     }
 
-    // 4. Render Orders List Table (superadmin and admin)
     if (rank === "superadmin" || rank === "admin") {
         DOM.adminOrdersList.innerHTML = "";
         
@@ -626,7 +633,6 @@ function renderAdminPanel() {
         }
     }
 
-    // 5. Render Authorized Users Table (superadmin only)
     if (rank === "superadmin") {
         DOM.adminRolesList.innerHTML = "";
         
@@ -651,7 +657,6 @@ function renderAdminPanel() {
         });
     }
 
-    // 6. Recalculate Dashboard Stats (superadmin and admin)
     if (rank === "superadmin" || rank === "admin") {
         calculateStats();
     }
@@ -745,23 +750,20 @@ function toggleCartDrawer(show) {
     }
 }
 
+// --- Add to Cart ---
 function quickAddToCart(productId) {
     const product = state.products.find(p => p.id === productId);
     if (!product) return;
 
     const size = (product.sizes && product.sizes.length > 0 && product.sizes[0] !== "") ? product.sizes[0] : null;
-    
     addItemToCart(product, size, 1);
 }
 
 function addProductFromModalToCart() {
     if (!state.selectedProductForModal) return;
-    
     const product = state.selectedProductForModal;
-    
     const selectedSizeEl = DOM.modalSizesContainer.querySelector(".size-box.selected");
     const size = selectedSizeEl ? selectedSizeEl.innerText : null;
-    
     const quantity = parseInt(DOM.modalQtyInput.value) || 1;
 
     addItemToCart(product, size, quantity);
@@ -812,7 +814,6 @@ function removeCartItem(index) {
 
 function updateCartUI() {
     DOM.cartItemsContainer.innerHTML = "";
-    
     let subtotal = 0;
     let badgeCount = 0;
 
@@ -903,6 +904,7 @@ function handleCheckoutFormSubmit(e) {
     let subtotal = 0;
     state.cart.forEach(item => subtotal += (item.price * item.quantity));
 
+    // Generate unique order ID
     const orderId = `BL-${Math.floor(1000 + Math.random() * 9000)}`;
     const newOrder = {
         id: orderId,
@@ -940,21 +942,101 @@ ${itemsText}
 
     const whatsappUrl = `https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(whatsappMessage)}`;
     
-    showToast("تم تسجيل الطلب! جاري تحويلك إلى الواتساب للتأكيد...", "success");
+    showToast(`تم تسجيل الطلب رقم #${orderId}! جاري تحويلك للتأكيد...`, "success");
     
+    // Clear cart
+    state.cart = [];
+    saveDataToLocalStorage();
+    updateCartUI();
+    
+    // Reset and close checkout modal
+    DOM.checkoutForm.reset();
+    toggleModal(DOM.checkoutModal, false);
+    
+    // Re-render storefront and admin
+    renderStorefront();
+    renderAdminPanel();
+
+    // AUTOMATIC ROUTING TO TRACKING PORTAL:
+    // Open the tracking modal
+    toggleModal(DOM.trackModal, true);
+    // Put the new order ID in the input
+    DOM.trackInput.value = orderId;
+    // Render the tracking progress steps directly
+    displayOrderTrackingResult(newOrder);
+    
+    // Open WhatsApp in a new tab after a brief delay
     setTimeout(() => {
         window.open(whatsappUrl, "_blank");
-        
-        state.cart = [];
-        saveDataToLocalStorage();
-        updateCartUI();
-        
-        DOM.checkoutForm.reset();
-        toggleModal(DOM.checkoutModal, false);
-        
-        renderStorefront();
-        renderAdminPanel();
-    }, 1500);
+    }, 1200);
+}
+
+// --- Order Tracking Search & Rendering ---
+function openTrackingPortal() {
+    DOM.trackInput.value = "";
+    DOM.trackResult.classList.add("hidden");
+    toggleModal(DOM.trackModal, true);
+}
+
+function displayOrderTrackingResult(order) {
+    DOM.trackResultId.innerText = `#${order.id}`;
+    DOM.trackResultName.innerText = order.customer.name;
+    DOM.trackResultAddress.innerText = `${order.customer.city} - ${order.customer.address}`;
+    DOM.trackResultDate.innerText = order.date;
+    DOM.trackResultTotal.innerText = `${order.total} د.ل`;
+
+    const stepPending = document.getElementById("step-pending");
+    const stepShipped = document.getElementById("step-shipped");
+    const stepCompleted = document.getElementById("step-completed");
+    const line1 = document.getElementById("line-1");
+    const line2 = document.getElementById("line-2");
+
+    const steps = [stepPending, stepShipped, stepCompleted];
+    const lines = [line1, line2];
+
+    steps.forEach(s => s.className = "track-step");
+    lines.forEach(l => l.className = "track-line");
+    DOM.trackResultCancelledNote.classList.add("hidden");
+
+    const status = order.status;
+
+    if (status === "pending") {
+        stepPending.classList.add("active");
+    } else if (status === "shipped") {
+        stepPending.classList.add("active");
+        line1.classList.add("active");
+        stepShipped.classList.add("active");
+    } else if (status === "completed") {
+        stepPending.classList.add("active");
+        line1.classList.add("active");
+        stepShipped.classList.add("active");
+        line2.classList.add("active");
+        stepCompleted.classList.add("active");
+    } else if (status === "cancelled") {
+        steps.forEach(s => s.classList.add("cancelled"));
+        DOM.trackResultCancelledNote.classList.remove("hidden");
+    }
+
+    DOM.trackResult.classList.remove("hidden");
+}
+
+function handleTrackingSearchSubmit(e) {
+    e.preventDefault();
+    let query = DOM.trackInput.value.trim().toUpperCase();
+
+    if (query && !query.startsWith("BL-")) {
+        query = "BL-" + query;
+    }
+
+    const order = state.orders.find(o => o.id === query);
+
+    if (order) {
+        displayOrderTrackingResult(order);
+        showToast("تم العثور على الطلبية وتحديث حالتها!", "success");
+    } else {
+        DOM.trackResult.classList.add("hidden");
+        showToast("لم نجد أي طلبية برقم التتبع هذا! يرجى التأكد وإعادة المحاولة.", "error");
+    }
 }
 
 // --- Admin Product Forms CRUD ---
@@ -1079,7 +1161,7 @@ function getStatusText(status) {
     switch (status) {
         case "pending": return "قيد الانتظار";
         case "shipped": return "تم الشحن";
-        case "completed": return "مكتمل";
+        case "completed": return "واصل";
         case "cancelled": return "ملغي";
         default: return status;
     }
